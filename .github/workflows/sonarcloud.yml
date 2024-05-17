@@ -1,0 +1,47 @@
+name: SonarCloud
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  sonarqube:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: 11
+
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven
+          restore-keys: |
+            ${{ runner.os }}-maven
+
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Esse token é automaticamente gerado pelo GitHub Actions
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Adicione o token do SonarCloud aos segredos do seu repositório
+        run: |
+          mvn clean verify sonar:sonar \
+            -Dsonar.projectKey=matheusnascimentto \
+            -Dsonar.organization=MatheusNascimento \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=$SONAR_TOKEN
