@@ -19,7 +19,8 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
-          java-version: 17
+          distribution: 'adopt'
+          java-version: '17'
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v2
@@ -37,8 +38,8 @@ jobs:
 
       - name: Build and analyze
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Esse token é automaticamente gerado pelo GitHub Actions
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Adicione o token do SonarCloud aos segredos do seu repositório
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mvn clean verify sonar:sonar \
             -Dsonar.projectKey=matheusnascimentto \
