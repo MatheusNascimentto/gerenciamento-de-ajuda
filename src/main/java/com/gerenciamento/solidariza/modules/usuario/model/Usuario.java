@@ -1,5 +1,6 @@
 package com.gerenciamento.solidariza.modules.usuario.model;
 
+import com.gerenciamento.solidariza.modules.endereco.dto.EnderecoRequest;
 import com.gerenciamento.solidariza.modules.endereco.model.Endereco;
 import com.gerenciamento.solidariza.modules.usuario.dto.UsuarioRequest;
 import jakarta.persistence.*;
@@ -38,11 +39,11 @@ public class Usuario {
     private Endereco endereco;
 
     public static Usuario build(UsuarioRequest usuarioRequest) {
-        Endereco endereco = new Endereco(
+        Endereco endereco = Endereco.build(new EnderecoRequest(
                 usuarioRequest.getRua(),
                 usuarioRequest.getNumero(),
                 usuarioRequest.getBairro()
-        );
+        ));
 
         return Usuario.builder()
                 .nome(usuarioRequest.getNome())
