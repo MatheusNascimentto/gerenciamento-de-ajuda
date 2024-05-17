@@ -1,18 +1,16 @@
 package com.gerenciamento.solidariza.modules.endereco.model;
 
+import com.gerenciamento.solidariza.modules.endereco.dto.EnderecoRequest;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Embeddable
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Endereco {
 
     @NotBlank
@@ -24,4 +22,12 @@ public class Endereco {
     @NotBlank
     @Size(max = 100)
     private String bairro;
+
+    public static Endereco build(EnderecoRequest enderecoRequest) {
+        return Endereco.builder()
+                .rua(enderecoRequest.getRua())
+                .numero(enderecoRequest.getNumero())
+                .bairro(enderecoRequest.getBairro())
+                .build();
+    }
 }
