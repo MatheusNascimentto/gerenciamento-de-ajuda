@@ -1,13 +1,16 @@
 package com.gerenciamento.solidariza.modules.usuario.model;
 
+import com.gerenciamento.solidariza.modules.doacao.model.Doacao;
 import com.gerenciamento.solidariza.modules.endereco.dto.EnderecoRequest;
 import com.gerenciamento.solidariza.modules.endereco.model.Endereco;
 import com.gerenciamento.solidariza.modules.usuario.dto.UsuarioRequest;
+import com.gerenciamento.solidariza.modules.usuario.enums.TipoUsuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import java.util.Set;
 
 @Builder
 @Data
@@ -31,12 +34,14 @@ public class Usuario {
     @Size(min = 8, max = 100)
     private String senha;
     @Column(name = "tipo_usuario")
-    private String tipoUsuario; // Voluntário, Doador, Coordenador, Beneficiário
+    @Enumerated(EnumType.STRING)
+    private TipoUsuario tipoUsuario;
     @Size(max = 20)
     private String telefone;
-    @Size(max = 200)
     @Embedded
     private Endereco endereco;
+    @OneToMany(mappedBy = "usuario")
+    private Set<Doacao> doacoes;
 
     public static Usuario build(UsuarioRequest usuarioRequest) {
         Endereco endereco = Endereco.build(new EnderecoRequest(

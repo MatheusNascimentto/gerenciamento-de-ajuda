@@ -1,4 +1,4 @@
-package com.gerenciamento.solidariza.config;
+package com.gerenciamento.solidariza.config.cors;
 
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
