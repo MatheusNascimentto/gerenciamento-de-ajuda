@@ -16,7 +16,7 @@ public interface UsuarioController {
 
     @Operation(summary = "Buscar todos os usuários",
             description = "Serviço responsável por buscar todos os usuários do sistema")
-    @GetMapping
+    @GetMapping("/usuario")
     ResponseEntity<List<UsuarioResponse>> getAllUsuarios();
 
     @Operation(summary = "Buscar um usuário por ID",
@@ -30,7 +30,7 @@ public interface UsuarioController {
 
     @Operation(summary = "Criar um novo usuário",
             description = "Serviço responsável por criar um novo usuário no sistema")
-    @PostMapping
+    @PostMapping("/usuario")
     ResponseEntity<UsuarioResponse> createUsuario(@RequestBody UsuarioRequest usuarioRequest);
 
     @Operation(summary = "Atualizar um usuário",
