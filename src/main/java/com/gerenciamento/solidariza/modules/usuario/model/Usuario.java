@@ -9,8 +9,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.*;
-import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.util.List;
 
 @Builder
 @Data
@@ -40,8 +43,8 @@ public class Usuario {
     private String telefone;
     @Embedded
     private Endereco endereco;
-    @OneToMany(mappedBy = "usuario")
-    private Set<Doacao> doacoes;
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Doacao> doacoes;
 
     public static Usuario build(UsuarioRequest usuarioRequest) {
         Endereco endereco = Endereco.build(new EnderecoRequest(
